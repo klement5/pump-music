@@ -18,19 +18,28 @@ export default function LaunchArtistMemecoin() {
           onChange={(e) => setArtistId(e.target.value)}
           className="w-full p-3 mb-4 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-gray-400"
         />
-        <div className="w-full p-1 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded-full">
+        <div className="w-full p-1 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded-full mb-5">
           <button
             className="w-full bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
             Verify
           </button>
         </div>
-        <div className="w-full mt-5 p-1 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded-full">
-          <button
-            className="w-full bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            Claim Fees
-          </button>
+        <div className="flex space-x-4">
+          <div className="flex-1 p-1 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded-full">
+            <button
+              className="w-full bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              Claim Fees
+            </button>
+          </div>
+          <div className="flex-1 p-1 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 rounded-full">
+            <button
+              className="w-full bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              Donate
+            </button>
+          </div>
         </div>
       </div>
     </div>

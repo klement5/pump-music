@@ -1,49 +1,45 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import Image from "next/image"; // Import Next.js Image component
 import metamaskLogo from "./assets/metamask_logo.png";
 import arrowRight from "./assets/arrow_right.png";
+import MemeCoinCard from "./components/MemeCoinCard";
+import contractArtifact from "../../artifacts/contracts/SpotifyArtistList.sol/SpotifyArtistList.json";
 
-function shortenAddress(address) {
-  if (!address) return "";
-  return address.slice(0, 6) + "..." + address.slice(-4);
-}
-
-// Reusable component for a memecoin card
-function MemeCoinCard({ name, imageUrl, contractAddress }) {
-  const shortAddress = shortenAddress(contractAddress);
-  return (
-    <div className="bg-gradient-to-r from-black to-gray-900 p-4 rounded-lg shadow-lg w-full max-w-md flex items-center">
-      {/* Left side: smaller image */}
-      <div className="flex-shrink-0">
-        <img
-          src={imageUrl}
-          alt={name}
-          className="w-24 h-24 object-cover rounded-lg"
-        />
-      </div>
-      {/* Right side: text and buttons */}
-      <div className="ml-4 flex flex-col flex-grow">
-        <h2 className="text-xl font-bold text-white">{name}</h2>
-        {contractAddress && (
-          <p className="text-sm text-gray-300 mt-1">{shortAddress}</p>
-        )}
-        {/* Buttons container */}
-        <div className="mt-auto flex gap-2">
-          <button className="w-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
-            Buy
-          </button>
-          <button className="w-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
-            Sell
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+const CONTRACT_ADDRESS = "0xbe4b4A0B8Df6964e043D28B0c8cC9749F6392458";
 
 export default function Home() {
+  const [artists, setArtists] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function loadArtists() {
+      setLoading(true);
+      try {
+        // Ensure MetaMask is available
+        if (!window.ethereum) {
+          console.error("MetaMask is not available");
+          setLoading(false);
+          return;
+        }
+        // Connect to the user's wallet (you might not need to request accounts if it's already connected)
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, contractArtifact.abi, provider);
+        // Call getAllArtists() to fetch data from the contract
+        const data = await contract.getAllArtists();
+        console.log("Artists from contract:", data);
+        // Assume that each element of data is an object with { name, imageUrl, bio }
+        setArtists(data);
+      } catch (error) {
+        console.error("Error loading artists:", error);
+      }
+      setLoading(false);
+    }
+    loadArtists();
+  }, []);
+
   // Example memecoins array (you can replace the image URL with your actual images)
   const memecoins = [
     { 
@@ -184,9 +180,18 @@ export default function Home() {
       {/* Main Content */}
       <main className="container mx-auto py-8 px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {memecoins.map((coin, index) => (
-            <MemeCoinCard key={index} name={coin.name} imageUrl={coin.imageUrl} contractAddress={coin.contractAddress} />
+        {artists.map((artist, index) => (
+            <MemeCoinCard
+              key={index}
+              name={artist.name}
+              contractAddress={"0x4d5e6f7a8b9c01234567890abcdef456789abcd00"}
+              imageUrl={artist.imageUrl}
+              bio={artist.bio}
+            />
           ))}
+          {/* {memecoins.map((coin, index) => (
+            <MemeCoinCard key={index} name={coin.name} imageUrl={coin.imageUrl} contractAddress={coin.contractAddress} />
+          ))} */}
         </div>
       </main>
     </div>

@@ -58,8 +58,8 @@ export default function LaunchArtistMemecoin() {
     
           // Deploy the memecoin contract
           const memecoinFactory = new ContractFactory(
-            memecoinArtifact.abi, // Use the typed ABI
-            memecoinArtifact.bytecode, // Use the typed bytecode
+            artifact.abi, // Use the typed ABI
+            artifact.bytecode, // Use the typed bytecode
             signer
           );
           console.log("deploying")

@@ -3,3 +3,4 @@
 /* eslint-disable */
 export type { ArtistRegistry } from "./ArtistRegistry";
 export type { BnbMemecoin } from "./BnbMemecoin";
+export type { SpotifyArtistList } from "./SpotifyArtistList";
