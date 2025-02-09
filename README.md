@@ -1,4 +1,4 @@
-# bumb.music
+# bump.music
 
 Hey there! Welcome to bump.Music.
 Ever heard someone say, "Oh, I was listening to them back when they had just 20K listeners on Spotify?"
