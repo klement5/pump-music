@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { ArtistRegistry__factory } from "./ArtistRegistry__factory";
 export { BnbMemecoin__factory } from "./BnbMemecoin__factory";
+export { SpotifyArtistList__factory } from "./SpotifyArtistList__factory";
