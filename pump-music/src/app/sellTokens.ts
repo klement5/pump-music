@@ -1,4 +1,5 @@
 import { ethers } from "hardhat";
+import { BnbMemecoin } from "../../typechain"; // Adjust path if needed
 
 async function main() {
   const memecoinAddress = "0x..."; // Replace with the memecoin contract address
@@ -7,7 +8,7 @@ async function main() {
   const [user] = await ethers.getSigners();
 
   const Memecoin = await ethers.getContractFactory("BnbMemecoin");
-  const memecoin = await Memecoin.attach(memecoinAddress); // Updated for ethers@6.x
+  const memecoin = Memecoin.attach(memecoinAddress) as BnbMemecoin;
 
   console.log("Selling tokens...");
   const tx = await memecoin.sellTokens(tokenAmount);

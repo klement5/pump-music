@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { BrowserProvider, ContractFactory } from "ethers"; // Updated import
-import memecoinArtifact from "./../../../ABI/BnbMemecoin.json";
+import memecoinArtifact from "./../../../artifacts/contracts/BnbMemecoin.sol/BnbMemecoin.json";
 
 // Adjust the type definition for the contract artifact
 interface ContractArtifact {
@@ -12,6 +12,7 @@ interface ContractArtifact {
 
 // Use `unknown` first, and then cast to `ContractArtifact` to ensure TypeScript accepts it
 const artifact = memecoinArtifact as unknown as ContractArtifact;
+console.log("memecoinArtifact: " + memecoinArtifact);
 
 const App: React.FC = () => {
   const [spotifyId, setSpotifyId] = useState<string>("");
@@ -37,22 +38,36 @@ const App: React.FC = () => {
     try {
       // Check if MetaMask is installed
       if (!(window as any).ethereum) {
+        console.log("Console inside metamask if-statement");
         throw new Error(
           "MetaMask is not installed. Please install it to continue."
         );
       }
-
+      console.log("test after metamask if statement");
       // Connect to the user's wallet (MetaMask)
       const provider = new BrowserProvider((window as any).ethereum); // Updated for ethers@6.x
+      console.log(
+        "after const provider = new BrowserProvider((window as any).ethereum);"
+      );
       await provider.send("eth_requestAccounts", []);
+      console.log("after await provider.send eth_requestAccounts");
       const signer = await provider.getSigner(); // Updated for ethers@6.x
-
+      console.log("after const signer");
+      console.log(
+        "artifact.abi: " +
+          artifact.abi +
+          "artifact.bytecode: " +
+          artifact.bytecode +
+          "signer: " +
+          signer
+      );
       // Deploy the memecoin contract
       const memecoinFactory = new ContractFactory(
         artifact.abi, // Use the typed ABI
         artifact.bytecode, // Use the typed bytecode
         signer
       );
+      console.log("test test after memecoinfactory");
 
       console.log("Deploying memecoin contract...");
       const memecoin = await memecoinFactory.deploy(

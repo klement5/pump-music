@@ -5,7 +5,7 @@ import "@typechain/hardhat";
 import "dotenv/config";
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.4",
+  solidity: "0.8.20", // Update to match OpenZeppelin
   networks: {
     bscTestnet: {
       url: process.env.BSC_TESTNET_RPC_URL,

@@ -11,9 +11,12 @@ async function main() {
   const ArtistRegistry = await ethers.getContractFactory("ArtistRegistry");
   const artistRegistry = await ArtistRegistry.deploy();
 
-  await artistRegistry.deployed();
+  console.log("Waiting for deployment...");
+  const deploymentReceipt = await artistRegistry.waitForDeployment(); // Correct way in Ethers v6
 
-  console.log("ArtistRegistry deployed to:", artistRegistry.address);
+  const contractAddress = await artistRegistry.getAddress(); // Correct way to get contract address in Ethers v6
+
+  console.log("ArtistRegistry deployed to:", contractAddress);
 }
 
 main()
